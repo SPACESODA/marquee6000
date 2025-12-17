@@ -1,7 +1,6 @@
 /**
- * marquee6000 marquee6000 marquee6000 marquee6000 marquee6000
+ * marquee6000
  * http://github.com/SPACESODA/marquee6000
- * Marquees for the new millennium v1.0
  * MIT License
  */
 
