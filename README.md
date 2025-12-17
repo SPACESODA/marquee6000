@@ -134,9 +134,10 @@ Marquee also adds a `is-init` selector. You can use this to add and toggle entra
 
 ### Build
 
-The source of truth is `src/marquee6k.js`. Run the build to generate both `marquee6k.js` (UMD) and `marquee6k.esm.js` (ESM):
+The source of truth is `src/marquee6k.js`. Build outputs are generated so the same code works both via a plain `<script>` tag (UMD) and via `import` (ESM), without maintaining two separate implementations.
 
 ```bash
+npm install
 npm run build
 ```
 
