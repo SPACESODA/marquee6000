@@ -1,34 +1,30 @@
-/**
- * marquee6000
- * http://github.com/SPACESODA/marquee6000
- * MIT License
- */
+(function (global, factory) {
+  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
+  typeof define === 'function' && define.amd ? define(factory) :
+  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.marquee6k = factory());
+})(this, (function () { 'use strict';
 
-;(function(root, factory) {
-  if (typeof define === 'function' && define.amd) {
-    define([], factory);
-  } else if (typeof exports === 'object') {
-    module.exports = factory();
-  } else {
-    root.marquee6k = factory();
-  }
-}(this, function() {
-  'use strict';
+  /**
+   * marquee6k
+   * http://github.com/SPACESODA/marquee6k
+   * MIT License
+   */
 
+
+  let MARQUEES = [];
   let animationId = 0;
 
   class marquee6k {
     constructor(element, options) {
-
       if (element.children.length === 0) {
-        throw new Error("Encountered a marquee element without children, please supply a wrapper for your content");
+        throw new Error('Encountered a marquee element without children, please supply a wrapper for your content');
       }
 
       this.element = element;
       this.selector = options.selector;
       this.speed = element.dataset.speed || 0.25;
-      this.pausable = element.dataset.pausable === 'true' ? true : false;
-      this.reverse = element.dataset.reverse === 'true' ? true : false;
+      this.pausable = element.dataset.pausable === 'true';
+      this.reverse = element.dataset.reverse === 'true';
       this.paused = false;
       this.parent = element.parentElement;
       this.parentProps = this.parent.getBoundingClientRect();
@@ -159,7 +155,8 @@
     static init(options = { selector: 'marquee6k' }) {
       if (animationId) window.cancelAnimationFrame(animationId);
 
-      window.MARQUEES = [];
+      MARQUEES = [];
+      window.MARQUEES = MARQUEES;
       const marquees = Array.from(document.querySelectorAll(`.${options.selector}`));
       let previousWidth = window.innerWidth;
       let timer;
@@ -176,6 +173,7 @@
         for (let i = 0; i < MARQUEES.length; i++) {
           MARQUEES[i].animate();
         }
+
         animationId = window.requestAnimationFrame(animate);
       }
 
@@ -190,7 +188,7 @@
             MARQUEES[i].repopulate(difference, isLarger);
           }
 
-          previousWidth = this.innerWidth;
+          previousWidth = window.innerWidth;
         }, 250);
       });
     }
@@ -199,3 +197,4 @@
   return marquee6k;
 
 }));
+//# sourceMappingURL=marquee6k.js.map

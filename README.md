@@ -1,4 +1,4 @@
-# marquee6000
+# marquee6k
 
 Marquees forever ✨
 
@@ -20,13 +20,13 @@ Super smooth and versatile javaScript plugin with no dependencies.
 
 ## Usage
 
-1. Include marquee6000 in your html file.  
-   Download zip or install via `npm install marquee6000`
+1. Include marquee6k in your html file.  
+   Download zip or install via `npm install marquee6k`
 
     ```javascript
-        const marquee6k = require('marquee6000');
+        const marquee6k = require('marquee6k');
         // or
-        import marquee6k from 'marquee6000';
+        import marquee6k from 'marquee6k';
     ```
 
     ```html
@@ -118,7 +118,7 @@ You can toggle the animation by:
 
 ### Important
 
-If you are using images or custom fonts, initialise marquee6000 AFTER they have been loaded!
+If you are using images or custom fonts, initialise marquee6k AFTER they have been loaded!
 
 ### Options
 

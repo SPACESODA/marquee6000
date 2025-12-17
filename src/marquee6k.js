@@ -1,11 +1,12 @@
 /**
- * marquee6000
- * http://github.com/SPACESODA/marquee6000
+ * marquee6k
+ * http://github.com/SPACESODA/marquee6k
  * MIT License
  */
 
 'use strict';
 
+let MARQUEES = [];
 let animationId = 0;
 
 class marquee6k {
@@ -149,7 +150,8 @@ class marquee6k {
   static init(options = { selector: 'marquee6k' }) {
     if (animationId) window.cancelAnimationFrame(animationId);
 
-    window.MARQUEES = [];
+    MARQUEES = [];
+    window.MARQUEES = MARQUEES;
     const marquees = Array.from(document.querySelectorAll(`.${options.selector}`));
     let previousWidth = window.innerWidth;
     let timer;
@@ -181,7 +183,7 @@ class marquee6k {
           MARQUEES[i].repopulate(difference, isLarger);
         }
 
-        previousWidth = this.innerWidth;
+        previousWidth = window.innerWidth;
       }, 250);
     });
   }
