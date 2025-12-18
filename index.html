@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>marquee6k - Smooth JS Marquee</title>
+    <style>
+        :root {
+            --bg-color: #f6f7fb;
+            --card-bg: rgba(255, 255, 255, 0.8);
+            --card-bg-solid: #ffffff;
+            --text-color: #0f172a;
+            --muted-color: rgba(15, 23, 42, 0.7);
+            --border-color: rgba(15, 23, 42, 0.10);
+            --shadow-lg: 0 24px 70px rgba(15, 23, 42, 0.12);
+            --accent-color: #3b82f6;
+            --gradient-1: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+            --gradient-2: linear-gradient(135deg, #ec4899 0%, #f97316 100%);
+            --font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            --radius-lg: 24px;
+            --space-1: 0.75rem;
+            --space-2: 1.25rem;
+            --space-3: 2rem;
+            --space-4: 3rem;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background:
+                radial-gradient(1200px 700px at 10% -10%, rgba(37, 99, 235, 0.14), transparent 60%),
+                radial-gradient(1000px 600px at 100% 0%, rgba(124, 58, 237, 0.12), transparent 55%),
+                radial-gradient(900px 600px at 40% 110%, rgba(236, 72, 153, 0.10), transparent 55%),
+                var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-family);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Typography & Layout */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 3.5rem 1.5rem 4.5rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 4.5rem;
+            padding-top: 1.5rem;
+        }
+
+        h1 {
+            font-size: clamp(3.25rem, 6vw, 5.25rem);
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -2px;
+            line-height: 1.02;
+        }
+
+        .subtitle {
+            font-size: 1.15rem;
+            color: var(--muted-color);
+            max-width: 720px;
+            margin: 0 auto 2rem;
+            font-weight: 400;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.9rem 1.35rem;
+            background: var(--gradient-1);
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            border-radius: 999px;
+            box-shadow: 0 10px 24px rgba(37, 99, 235, 0.25);
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 16px 32px rgba(37, 99, 235, 0.28);
+        }
+
+        /* Demo Sections */
+        .demo-section {
+            margin-bottom: 2.5rem;
+        }
+
+        .section-title {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: rgba(15, 23, 42, 0.55);
+            margin-bottom: 2rem;
+            margin-left: 1rem;
+            font-weight: 600;
+        }
+
+        /* Card / Marquee Container Styles */
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            padding: clamp(2rem, 4vw, 3rem) 0;
+            box-shadow: var(--shadow-lg);
+            backdrop-filter: blur(10px);
+        }
+
+        /* Implementation / Docs card */
+        .info-card {
+            background: var(--card-bg-solid);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: clamp(1.5rem, 3vw, 2.25rem);
+            box-shadow: 0 16px 60px rgba(15, 23, 42, 0.10);
+        }
+
+        .info-card h2 {
+            font-size: clamp(1.5rem, 2.4vw, 2rem);
+            letter-spacing: -0.02em;
+            margin-bottom: 0.75rem;
+        }
+
+        .info-card p {
+            color: var(--muted-color);
+            max-width: 70ch;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1.05fr 0.95fr;
+            gap: clamp(1.25rem, 3vw, 2rem);
+            align-items: start;
+            margin-top: 1.25rem;
+        }
+
+        .info-list {
+            margin-top: 1rem;
+            display: grid;
+            gap: 0.75rem;
+        }
+
+        .info-item {
+            display: grid;
+            gap: 0.25rem;
+            padding: 0.85rem 0.95rem;
+            border: 1px solid rgba(15, 23, 42, 0.08);
+            border-radius: 14px;
+            background: rgba(15, 23, 42, 0.02);
+        }
+
+        .info-item strong {
+            color: rgba(15, 23, 42, 0.88);
+            font-weight: 650;
+        }
+
+        .code-block {
+            background: rgba(2, 6, 23, 0.94);
+            color: rgba(255, 255, 255, 0.92);
+            border-radius: 18px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            overflow: hidden;
+            box-shadow: 0 18px 50px rgba(2, 6, 23, 0.22);
+        }
+
+        .code-block .code-title {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.72);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .code-block pre {
+            margin: 0;
+            padding: 1rem;
+            overflow-x: auto;
+            font-size: 0.9rem;
+            line-height: 1.55;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+        }
+
+        /* Marquee Content Styles */
+        .marquee6k__copy {
+            padding-right: 4.5rem;
+            /* Gap between repeats */
+        }
+
+        /* Big Text */
+        .big-text {
+            font-size: clamp(3.25rem, 9vw, 7.25rem);
+            font-weight: 900;
+            white-space: nowrap;
+            line-height: 1;
+            letter-spacing: -2px;
+        }
+
+        .outline-text {
+            color: transparent;
+            -webkit-text-stroke: 2px rgba(15, 23, 42, 0.22);
+        }
+
+        /* S2 Framework CTA */
+        .s2-cta {
+            text-align: center;
+            padding: clamp(2.25rem, 5vw, 3.5rem) 2rem;
+            background: var(--card-bg-solid);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+            box-shadow: 0 16px 60px rgba(15, 23, 42, 0.10);
+        }
+
+        .s2-cta h3 {
+            font-size: clamp(1.75rem, 3vw, 2.25rem);
+            margin-bottom: 0.75rem;
+        }
+
+        .s2-cta p {
+            color: var(--muted-color);
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        .s2-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-color);
+            text-decoration: none;
+            border-bottom: 1px solid rgba(15, 23, 42, 0.35);
+            padding-bottom: 2px;
+            transition: border-color 0.2s;
+        }
+
+        .s2-link:hover {
+            border-color: rgba(15, 23, 42, 0.85);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem 0 3rem;
+            color: rgba(15, 23, 42, 0.55);
+            font-size: 0.9rem;
+        }
+
+        footer a {
+            color: inherit;
+        }
+
+        .demo-section:last-of-type {
+            margin-bottom: 1rem;
+        }
+
+        @media (max-width: 640px) {
+            header {
+                margin-bottom: 3.5rem;
+            }
+
+            .container {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+
+            .marquee6k__copy {
+                padding-right: 3.25rem;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <header>
+            <h1>marquee6k</h1>
+            <p class="subtitle">
+                Super smooth, lightweight vanilla JavaScript marquee library.<br />
+                No dependencies. High performance.
+            </p>
+            <a href="https://github.com/SPACESODA/marquee6k" class="btn">View on GitHub</a>
+        </header>
+
+        <!-- Demo -->
+        <section class="demo-section">
+
+            <div class="card">
+                <div class="marquee6k" data-speed="1.5">
+                    <div class="big-text">
+                        LIGHTWEIGHT • SMOOTH • PERFORMANT • ZERO DEPENDENCIES •
+                    </div>
+                </div>
+                <div class="marquee6k" data-speed="0.5" data-reverse="true" style="margin-top: 1rem; opacity: 0.5;">
+                    <div class="big-text outline-text">
+                        SCROLL LEFT • SCROLL RIGHT • ANY CONTENT •
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Implementation info -->
+        <section class="demo-section">
+            <p class="section-title">Implementation</p>
+            <div class="info-card">
+                <h2>How to add a marquee</h2>
+                <p>Include the script, add a <code>.marquee6k</code> element, then call <code>marquee6k.init()</code>.
+                    Configure behavior with simple <code>data-*</code> attributes.</p>
+
+                <div class="info-grid">
+                    <div>
+                        <div class="info-list">
+                            <div class="info-item">
+                                <strong>1) Markup</strong>
+                                <div>Add <code>class="marquee6k"</code> and put any HTML inside (text, images, etc.).
+                                </div>
+                            </div>
+                            <div class="info-item">
+                                <strong>2) Config</strong>
+                                <div>
+                                    Use <code>data-speed</code> (e.g. <code>1.5</code>), <code>data-reverse</code>
+                                    (<code>true</code>/<code>false</code>), and <code>data-pausable</code> (pause on
+                                    hover).
+                                </div>
+                            </div>
+                            <div class="info-item">
+                                <strong>3) Spacing</strong>
+                                <div>Control the gap between repeats with CSS on <code>.marquee6k__copy</code>.</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="code-block" aria-label="Example code">
+                        <div class="code-title">
+                            <span>Drop-in example</span>
+                            <span>HTML</span>
+                        </div>
+                        <pre><code>&lt;!-- Load the library --&gt;
+&lt;script src="marquee6k.js"&gt;&lt;/script&gt;
+
+&lt;div class="marquee6k" data-speed="1.2" data-pausable="true"&gt;
+  &lt;div&gt;Hello marquee • Hello marquee •&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+  marquee6k.init();
+&lt;/script&gt;
+
+&lt;style&gt;
+  .marquee6k__copy { padding-right: 48px; }
+&lt;/style&gt;</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Demo on S2 Framework -->
+        <section class="demo-section">
+            <div class="s2-cta">
+                <h3>Marquee on Webflow</h3>
+                <p>See it in action with the S2 Framework:</p>
+                <a href="https://s2-framework.webflow.io/s2/components#marquee" target="_blank" class="s2-link">
+                    Visit the Demo on S2 Framework &rarr;
+                </a>
+            </div>
+        </section>
+
+    </div>
+
+    <footer>
+        <p>Created by <a href="https://github.com/SPACESODA" style="color: inherit;">SPACESODA</a></p>
+    </footer>
+
+    <!-- Load Library -->
+    <script src="marquee6k.js"></script>
+
+    <!-- Initialize -->
+    <script>
+        marquee6k.init();
+    </script>
+</body>
+
+</html>

@@ -12,10 +12,10 @@ Super smooth and versatile javaScript plugin with no dependencies.
 - ~3kb minified with no dependencies
 - Turn any element into a smooth-as-butter marquee
 - Text, images++<sup>*</sup> it'll do it
-- Style marquees as usual with CSS– get creative!
+- Style marquees as usual with CSS
 - Set speed and direction
 - Have a ton without any slowdown
-- Responsive!
+- Responsive
 - Access Marquee instances globally
 
 ## Usage
@@ -134,7 +134,7 @@ Marquee also adds a `is-init` selector. You can use this to add and toggle entra
 
 ### Build
 
-The source of truth is `src/marquee6k.js`. Build outputs are generated so the same code works both via a plain `<script>` tag (UMD) and via `import` (ESM), without maintaining two separate implementations.
+The source of truth is `src/marquee6k.ts`. Build outputs are generated so the same code works both via a plain `<script>` tag (UMD) and via `import` (ESM), without maintaining two separate implementations.
 
 ```bash
 npm install
@@ -158,9 +158,15 @@ things and all that fancy stuff, just make sure to style it with CSS.
 A: Absolutely. You just have to wrap the marquee element inside another
 container which gets the `position: fixed`.
 
-**Q: the callback does not work?**
+**Q: The callback does not work?**
 
 A: You have to pass in only the name of the function (must be defined in global scope). Still currently a very basic implementation. Suggestions welcome!
+
+## Credits
+
+This project is a fork of the popular (but long unmaintained) [Marquee3000](https://github.com/ezekielaquino/Marquee3000). If 3000 is a millennium, we guess 6000 is forever.
+
+The codebase has been fully modernized with TypeScript, squashed lingering bugs, and polished it up for the modern web. Same butter-smooth performance, just future-proofed.
 
 ## License
 
